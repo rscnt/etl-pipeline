@@ -74,7 +74,8 @@ def postive_breakdown_pdf_columns():
 
 def pdf_data_to_pandas_df(ward_pdf_info):
     ward_positive_df = pd.DataFrame(
-        ward_pdf_info, columns=postive_breakdown_pdf_columns(),
+        ward_pdf_info,
+        columns=postive_breakdown_pdf_columns(),
     )
     ward_positive_df["Total_Positive_Cases"] = pd.to_numeric(
         ward_positive_df["Total_Positive_Cases"]
