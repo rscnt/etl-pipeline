@@ -2,7 +2,7 @@ name: LuigiPipelineSchedule
 
 on:
   schedule:
-    - cron:  '0 12 * * *'
+    - cron:  '0 16 * * *'
 
 
 jobs:
@@ -33,4 +33,4 @@ jobs:
         SWB_DROPBOX_TOKEN: ${{ secrets.SWB_DROPBOX_TOKEN }}
       working-directory: ./pipeline
       run: |
-        python -m luigi --module pipeline.tasks SWBPipelineWrapper  --states-and-districts '{ "MH": ["Mumbai", "Pune", "Nanded", "Raigad"], "UP": ["Agra"]  }' --start-date '2020-04-20' --local-scheduler
+        python -m luigi --module pipeline.tasks SWBPipelineWrapper --elderly-page 0 --daily-case-growth-page 23 --positive-breakdown-index 20 --states-and-districts '{ "MH": ["Mumbai", "Pune", "Nanded", "Raigad"], "UP": ["Agra"]  }' --start-date '2020-04-20' --local-scheduler

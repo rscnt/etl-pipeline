@@ -11,6 +11,18 @@ on:
         description: 'start date for metrics'
         required: true
         default: '2020-04-20'
+      elderlyPage:
+        description: 'page for the elderly table scrapping'
+        required: true
+        default: 0
+      dailyCaseGrowthPage:
+        description: 'page for the daily case growth table'
+        required: true
+        default: 23
+      positiveBreakdownIndex:
+        description: 'page for the positive breakdown table'
+        required: true
+        default: 20
 
 jobs:
   pipelineManual:
@@ -40,4 +52,4 @@ jobs:
         SWB_DROPBOX_TOKEN: ${{ secrets.SWB_DROPBOX_TOKEN }}
       working-directory: ./pipeline
       run: |
-        python -m luigi --module pipeline.tasks SWBPipelineWrapper  --states-and-districts '${{ github.event.inputs.statesDistricts }}' --start-date ${{ github.event.inputs.startDate }} --local-scheduler
+        python -m luigi --module pipeline.tasks SWBPipelineWrapper --elderly-page ${{ github.event.inputs.elderlyPage }} --daily-case-growth-page ${{ github.event.inputs.dailyCaseGrowthPage }} --positive-breakdown-index ${{ github.event.inputs.positiveBreakdownIndex }}  --states-and-districts '${{ github.event.inputs.statesDistricts }}' --start-date ${{ github.event.inputs.startDate }} --local-scheduler
