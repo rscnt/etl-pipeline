@@ -28,11 +28,11 @@ if __name__ == "__main__":
         help="The URL or Path to the CSV with the argument list for ExtractDataFromPdfDashboardGSheetWrapper",
     )
     parser.add_argument(
-        "local_scheduler", 
-        type=bool, 
+        "local_scheduler",
+        type=bool,
         help="If we should use the local scheduler",
-        default=False
-        )
+        default=False,
+    )
     parsed_args = parser.parse_args()
     csv_uri = parsed_args.csv_uri
     use_local_scheduler = parsed_args.local_scheduler
@@ -51,7 +51,7 @@ if __name__ == "__main__":
                 date=row["date-of-pdf"],
                 daily_case_growth_page=row["case-growth-page"],
                 positive_breakdown_index=row["positive-breakdown-page"],
-                states_and_districts={}
+                states_and_districts={},
             )
         )
     # We assume we don't have a luigi deamon running.
