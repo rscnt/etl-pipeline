@@ -15,6 +15,10 @@ DEFAULT_WORKSHEET_URL = "https://docs.google.com/spreadsheets/d/1HeTZKEXtSYFDNKm
 WORKSHEET_URL = os.getenv("SWB_WORKSHEET_URL", DEFAULT_WORKSHEET_URL)
 
 try:
-    GSPREAD_CLIENT = gspread.service_account()
+    GSPREAD_CLIENT = gspread.service_account(
+        filename=os.getenv(
+            "GOOGLE_APPLICATION_CREDENTIALS", "~/.config/gspread/service_account.json"
+        )
+    )
 except FileNotFoundError as e:
     logging.error(f"Unable to create gspread client #{e}")
