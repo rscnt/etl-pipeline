@@ -366,3 +366,59 @@ This progress looks :) because there were no failed tasks or missing dependencie
 
 ===== Luigi Execution Summary =====
 ```
+
+Task for 2020-09-26 to 2020-10-17
+
+```sh
+poetry run python -m luigi \
+  --module pipeline.tasks.spreadsheets RangeDailyBase \
+  --of AllDataGSheetTask --start 2020-09-26  \
+  --stop 2020-10-17   \
+  --of-params '{ "states_and_districts": { "MH": ["Mumbai", "Pune", "Nanded", "Raigad"], "UP": ["Agra"]  } }'
+```
+
+Output
+
+```python
+===== Luigi Execution Summary =====
+
+Scheduled 85 tasks of which:
+* 85 ran successfully:
+    - 21 AllDataGSheetTask(...)
+    - 21 ExtractCaseGrowthTableGSheetTask(date=2020-09-26...2020-10-16, page=23)
+    - 21 ExtractGlanceWardWisePositiveCases(date=2020-09-26...2020-10-16, page_index=1)
+    - 21 ExtractWardPositiveBreakdownGSheetTask(date=2020-09-26...2020-10-16, page_index=20)
+    - 1 RangeDailyBase(...)
+
+This progress looks :) because there were no failed tasks or missing dependencies
+
+===== Luigi Execution Summary =====
+
+INFO -
+===== Luigi Execution Summary =====
+
+Scheduled 85 tasks of which:
+* 85 ran successfully:
+    - 21 AllDataGSheetTask(...)
+    - 21 ExtractCaseGrowthTableGSheetTask(date=2020-09-26...2020-10-16, page=23)
+    - 21 ExtractGlanceWardWisePositiveCases(date=2020-09-26...2020-10-16, page_index=1)
+    - 21 ExtractWardPositiveBreakdownGSheetTask(date=2020-09-26...2020-10-16, page_index=20)
+    - 1 RangeDailyBase(...)
+
+This progress looks :) because there were no failed tasks or missing dependencies
+
+===== Luigi Execution Summary =====
+```
+
+Screenshots from the luigi server to this task.
+
+Graph of tasks:
+
+![graph-of-tasks](./docs/luigi-graph-tasks-range-daily-2020-09-26--2020-10-17.png)
+
+List of tasks:
+
+![list-of-tasks](./docs/luigi-all-list-tasks-range-daily-2020-09-26--2020-10-17.png)
+
+
+We don't have a luigi server but if we could get one it would be possible for us to have a history of the tasks that have been run.

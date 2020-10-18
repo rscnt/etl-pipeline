@@ -15,7 +15,7 @@ import argparse
 import pandas
 import luigi
 
-from pipeline.tasks.spreadsheets import ExtractDataFromPdfDashboardGSheetWrapper
+from pipeline.tasks.spreadsheets import AllDataGSheetTask
 
 
 if __name__ == "__main__":
@@ -27,7 +27,15 @@ if __name__ == "__main__":
         type=str,
         help="The URL or Path to the CSV with the argument list for ExtractDataFromPdfDashboardGSheetWrapper",
     )
-    csv_uri = parser.parse_args().csv_uri
+    parser.add_argument(
+        "local_scheduler", 
+        type=bool, 
+        help="If we should use the local scheduler",
+        default=False
+        )
+    parsed_args = parser.parse_args()
+    csv_uri = parsed_args.csv_uri
+    use_local_scheduler = parsed_args.local_scheduler
     print(f"CSV URI {csv_uri}")
     # pandas#read_csv manages the download and parsing of values.
     task_args_df = pandas.read_csv(csv_uri)
@@ -39,15 +47,15 @@ if __name__ == "__main__":
     task_list = []
     for index, row in task_args_df.iterrows():
         task_list.append(
-            ExtractDataFromPdfDashboardGSheetWrapper(
+            AllDataGSheetTask(
                 date=row["date-of-pdf"],
-                elderly_page=row["elderly-table-page"],
                 daily_case_growth_page=row["case-growth-page"],
                 positive_breakdown_index=row["positive-breakdown-page"],
+                states_and_districts={}
             )
         )
     # We assume we don't have a luigi deamon running.
     luigi_run_result = luigi.build(
-        task_list, local_scheduler=True, detailed_summary=True
+        task_list, local_scheduler=use_local_scheduler, detailed_summary=True
     )
     print(luigi_run_result.summary_text)

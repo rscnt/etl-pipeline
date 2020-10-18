@@ -52,4 +52,4 @@ jobs:
         SWB_DROPBOX_TOKEN: ${{ secrets.SWB_DROPBOX_TOKEN }}
       working-directory: ./pipeline
       run: |
-        python -m luigi --module pipeline.tasks SWBPipelineWrapper --elderly-page ${{ github.event.inputs.elderlyPage }} --daily-case-growth-page ${{ github.event.inputs.dailyCaseGrowthPage }} --positive-breakdown-index ${{ github.event.inputs.positiveBreakdownIndex }}  --states-and-districts '${{ github.event.inputs.statesDistricts }}' --start-date ${{ github.event.inputs.startDate }} --local-scheduler
+        python -m luigi --module pipeline.tasks.spreadsheets AllDataGSheetTask  --daily-case-growth-page ${{ github.event.inputs.dailyCaseGrowthPage }} --positive-breakdown-index ${{ github.event.inputs.positiveBreakdownIndex }}  --states-and-districts '${{ github.event.inputs.statesDistricts }}' --local-scheduler

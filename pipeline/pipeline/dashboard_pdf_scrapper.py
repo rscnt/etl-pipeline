@@ -34,6 +34,13 @@ def extract_breakdown_positive_cases_date(positive_cases_page):
     return positive_cases_page.extract_text().split("\n")[1]
 
 
+def extract_ward_wise_positive_cases_glance_page(pdf_path, page_index=1):
+    pdf = read_pdf(pdf_path)
+    covid_glance_page = pdf.pages[page_index]
+    table = covid_glance_page.extract_table()
+    return pd.DataFrame(table[1:], columns=table[0])
+
+
 def extract_wards_data_from_page(positive_cases_page):
     top_left_x = 295.2  # points
     top_left_y = 79.2  # points
