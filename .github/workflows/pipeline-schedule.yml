@@ -28,6 +28,13 @@ jobs:
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
         restore-keys: |
           ${{ runner.os }}-pip-
+    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        version: '290.0.1'
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        service_account_email: ${{ secrets.GCP_SA_EMAIL }}
+        export_default_credentials: true
+    - run: gcloud info
     - name: luigi pipeline
       env:
         SWB_DROPBOX_TOKEN: ${{ secrets.SWB_DROPBOX_TOKEN }}
